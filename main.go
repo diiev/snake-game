@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/diiev/snake-game/internal/config"
 	"github.com/diiev/snake-game/internal/game"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -13,7 +14,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ebiten.SetWindowSize(g.Config().ScreenWidth, g.Config().ScreenHeight)
+	ebiten.SetWindowSize(config.Default().ScreenWidth, config.Default().ScreenHeight)
 	ebiten.SetWindowTitle("Snake Game")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeDisabled)
 

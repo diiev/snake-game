@@ -3,6 +3,8 @@ package game
 import (
 	"time"
 
+	"github.com/diiev/snake-game/internal/ai"
+	"github.com/diiev/snake-game/internal/audio"
 	"github.com/diiev/snake-game/internal/config"
 	"github.com/hajimehoshi/ebiten/v2"
 	"golang.org/x/mod/sumdb/storage"
