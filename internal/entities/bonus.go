@@ -1,6 +1,7 @@
 package entities
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -54,7 +55,7 @@ func (b *Bonus) Spawn(occupied []Vector2, width, height int) {
 
 		isOccupied := false
 		for _, o := range occupied {
-			if pos.Equals(o) {
+			if pos.Equal(o) {
 				isOccupied = true
 				break
 			}
@@ -86,5 +87,35 @@ func (b *Bonus) GetColor() string {
 		return "#10b981" // Зеленый
 	default:
 		return "#ffffff"
+	}
+}
+
+func (b BonusType) String() string {
+	switch b {
+	case BonusLife:
+		return "Life"
+	case BonusSpeed:
+		return "Speed"
+	case BonusShield:
+		return "Shield"
+	case BonusPoints:
+		return "Points"
+	default:
+		return "Unknown"
+	}
+}
+
+func (b *Bonus) GetDisplayName() string {
+	switch b.Type {
+	case BonusLife:
+		return fmt.Sprintf("+%d Life", b.Value)
+	case BonusSpeed:
+		return "2x Speed"
+	case BonusShield:
+		return "Shield"
+	case BonusPoints:
+		return fmt.Sprintf("+%d Points", b.Value)
+	default:
+		return "Bonus"
 	}
 }

@@ -20,7 +20,7 @@ type Manager struct {
 }
 
 func NewManager(cfg *config.Config) (*Manager, error) {
-	context := audio.NewContext(44100)
+	context, _ := audio.NewContext(44100)
 	m := &Manager{
 		audioContext: context,
 		musicPlayers: make(map[string]*audio.Player),
@@ -118,4 +118,36 @@ func (m *Manager) SetSoundVolume(volume float64) {
 	for _, player := range m.soundPlayers {
 		player.SetVolume(volume)
 	}
+}
+
+func (m *Manager) GetMusicVolume() float64 {
+	if len(m.musicPlayers) > 0 {
+		for _, player := range m.musicPlayers {
+			return player.Volume()
+		}
+	}
+	return m.config.MusicVolume
+}
+
+func (m *Manager) GetSoundVolume() float64 {
+	if len(m.soundPlayers) > 0 {
+		for _, player := range m.soundPlayers {
+			return player.Volume()
+		}
+	}
+	return m.config.SoundVolume
+}
+
+func (m *Manager) SetMusicVolume(volume float64) {
+	for _, player := range m.musicPlayers {
+		player.SetVolume(volume)
+	}
+	m.config.MusicVolume = volume
+}
+
+func (m *Manager) SetSoundVolume(volume float64) {
+	for _, player := range m.soundPlayers {
+		player.SetVolume(volume)
+	}
+	m.config.SoundVolume = volume
 }
