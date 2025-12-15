@@ -56,7 +56,7 @@ func (g *Game) Update() error {
 func (g *Game) Draw(screen *ebiten.Image) {
 	g.renderer.Draw(screen, g.world.Snake, g.world.Food, g.score)
 	if g.gameOver {
-		// TODO: Нарисовать экран Game Over
+		g.renderer.DrawGameOver(screen, g.score)
 	}
 }
 

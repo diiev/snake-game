@@ -1,9 +1,11 @@
 package render
 
 import (
+	"fmt"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 	"go.mod/internal/config"
 	"go.mod/internal/entity"
@@ -34,6 +36,7 @@ func (r *Renderer) Draw(screen *ebiten.Image, snake *entity.Snake, food *entity.
 
 	r.drawSnake(screen, snake)
 	r.drawFood(screen, food)
+	r.drawScore(screen, score)
 }
 
 func (r *Renderer) drawSnake(screen *ebiten.Image, snake *entity.Snake) {
@@ -71,5 +74,25 @@ func (r *Renderer) drawGrid(screen *ebiten.Image) {
 
 func (r *Renderer) drawScore(screen *ebiten.Image, score int) {
 	// Простой текст счёта (без использования текстурного шрифта)
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("Score: %d", score))
 
+}
+
+func (r *Renderer) DrawGameOver(screen *ebiten.Image, score int) {
+	w, h := screen.Size()
+
+	// Полупрозрачный тёмный оверлей
+	overlay := ebiten.NewImage(w, h)
+	overlay.Fill(color.RGBA{0, 0, 0, 160})
+	screen.DrawImage(overlay, nil)
+
+	// Текст по центру
+	msgMain := "	GAME OVER"
+	msgSub := fmt.Sprintf("Score: %d", score)
+	msgHint := "Press R to restart, ESC to quit"
+
+	// Простейшее позиционирование: примерно центр по Y с разными отступами
+	ebitenutil.DebugPrintAt(screen, msgMain, w/2-50, h/2-40)
+	ebitenutil.DebugPrintAt(screen, msgSub, w/2-40, h/2)
+	ebitenutil.DebugPrintAt(screen, msgHint, w/2-110, h/2+40)
 }
